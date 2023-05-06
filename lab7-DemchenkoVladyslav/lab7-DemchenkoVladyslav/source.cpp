@@ -159,7 +159,112 @@ void Task3()
 	{
 		cout << e.what();
 	}
-}
+}template<typename T>
+struct El
+{
+public:
+	El* prev = nullptr;
+	El* next = nullptr;
+	T value;
+};
+template<typename T>
+class List
+{
+	//
+	El<T>* head = nullptr;
+public:
+	class Iterator
+	{
+		El<T>* ptr;
+	public:
+		Iterator(El<T>* p)
+		{
+			ptr = p;
+		}
+		Iterator operator++(int i)
+		{
+			ptr = ptr->next;
+			return *this;
+		}
+		Iterator operator--(int i)
+		{
+			ptr = ptr->prev;
+			return *this;
+		}
+		bool operator!=(const Iterator& i1)
+		{
+			return i1.ptr != this->ptr;
+		}
+		bool operator==(const Iterator& i1)
+		{
+			return i1.ptr == this->ptr;
+		}
+		T operator*()
+		{
+			return ptr->value;
+		}
+	};
+
+	Iterator begin()
+	{
+		return  Iterator(head);
+	}
+	Iterator end()
+	{
+		if (head == nullptr)return nullptr;
+		El<T>* temp = head;
+		while (temp->next != nullptr)
+			temp = temp->next;
+		return  Iterator(temp);
+	}
+	void push(T value)
+	{
+		if (head == nullptr)
+		{
+			head = new El<T>();
+			head->value = value;
+			return;
+		}
+		El<T>* el = new El<T>();
+		el->value = value;
+		El<T>* temp = head;
+		while (temp->next != nullptr)
+		{
+			temp = temp->next;
+		}
+		temp->next = el;
+		el->prev = temp;
+	}
+	T pop()
+	{
+		if (head == nullptr)return NULL;
+		if (head->next == nullptr)
+		{
+			T t = head->value;
+			head = nullptr;
+			return t;
+		}
+		El<T>* temp = head;
+		while (temp->next->next != nullptr)
+		{
+			temp = temp->next;
+		}
+		T t = temp->next->value;
+		temp->next = nullptr;
+		return t;
+	}
+	void show()
+	{
+		if (head == nullptr)
+			return;
+		El<T>* temp = head;
+		while (temp != nullptr)
+		{
+			cout << temp->value << " ";
+			temp = temp->next;
+		}
+	}
+}; ;
 int main()
 {
 	setlocale(LC_ALL, "ukr");
@@ -175,5 +280,10 @@ int main()
 	cout << endl;
 	l.pop();
 	l.show();
+	l.push(5.5);
+	for (List<double>::Iterator i = l.begin(); i != nullptr; i++)
+	{
+		cout << *i;
+	}
 	return 0;
 }
