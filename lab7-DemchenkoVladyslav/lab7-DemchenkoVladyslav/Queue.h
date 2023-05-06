@@ -62,8 +62,9 @@ public:
 			{
 				array[i] = array[i + 1];
 			}
-			size--;
 		}
+		if (size > 0)
+			size--;
 	}
 	T& operator[](int);
 };
