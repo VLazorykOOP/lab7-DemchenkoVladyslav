@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Queue.cpp"
 #include "List.h"
-
+#pragma warning(disable : 4996)
 using namespace std;
 
 
@@ -32,29 +32,30 @@ void SwapMinMax(T* a, int s)
 	a[maxIn] = c;
 }
 template<>
-void SwapMinMax(char* a, int s)
+void SwapMinMax(char** a, int s)
 {
 	if (a == NULL)return;
 	int maxIn = 0;
 	int minIn = 0;
-	char curMax = a[0];
-	char curMin = a[0];
+	char* curMax = a[0];
+	char* curMin = a[0];
 	for (int i = 1; i < s; i++)
 	{
-		if (curMax < a[i])
+		if (strcmp(curMax, a[i]) == -1)
 		{
-			curMax = a[i];
+			strcpy(curMax, a[i]);
 			maxIn = i;
 		}
-		if (curMin > a[i])
+		if (strcmp(curMin, a[i]) == 1)
 		{
-			curMin = a[i];
+			strcpy(curMin, a[i]);
 			minIn = i;
 		}
 	}
-	char c = a[minIn];
-	a[minIn] = a[maxIn];
-	a[maxIn] = c;
+	char* c = new char[30];
+	strcpy(c, a[minIn]);
+	strcpy(a[minIn], a[maxIn]);
+	strcpy(a[maxIn], c);
 }
 template <typename T>
 void SortArray(T* a, int s)
@@ -69,14 +70,19 @@ void SortArray(T* a, int s)
 	}
 }
 template <>
-void SortArray(char* a, int s)
+void SortArray(char** a, int s)
 {
 	for (int i = 1; i < s; i++)
 	{
 		for (int j = i; j > 0; j--)
 		{
-			if (a[j] < a[j - 1])
-				swap(a[j], a[j - 1]);
+			if (strcmp(a[j], a[j - 1]) == -1)
+			{
+				char* c = new char[30];
+				strcpy(c, a[j]);
+				strcpy(a[j], a[j - 1]);
+				strcpy(a[j - 1], c);
+			}
 		}
 	}
 }
@@ -105,12 +111,22 @@ void Task1()
 		cout << mas[i] << " ";
 	}
 	cout << endl;
-	cout << "Введiть рядок:" << endl;
-	char* str = new char[30];
-	cin >> str;
-	SwapMinMax(str, strlen(str));
+	cout << "Введiть розмiр масиву рядків:" << endl;
+	cin >> s;
+	cout << "Введiть масив рядків рядок:" << endl;
+	char** str = new char* [30];
+	cin.get();
+	for (int i = 0; i < s; i++)
+	{
+		str[i] = new char[30];
+		cin.getline(str[i], 30);
+	}
+	SwapMinMax(str, s);
 	cout << "Результат роботи шаблонної функцiї для типу char*:" << endl;
-	cout << str << endl;
+	for (int i = 0; i < s; i++)
+	{
+		cout << str[i] << " ";
+	}
 }
 void Task2()
 {
@@ -137,16 +153,26 @@ void Task2()
 		cout << mas[i] << " ";
 	}
 	cout << endl;
-	cout << "Введiть рядок:" << endl;
-	char* str = new char[30];
-	cin >> str;
-	SortArray(str, strlen(str));
+	cout << "Введiть розмiр масиву рядків:" << endl;
+	cin >> s;
+	cout << "Введiть масив рядків рядок:" << endl;
+	char** str = new char* [30];
+	cin.get();
+	for (int i = 0; i < s; i++)
+	{
+		str[i] = new char[30];
+		cin.getline(str[i], 30);
+	}
+	SortArray(str, s);
 	cout << "Результат роботи шаблонної функцiї для типу char*:" << endl;
-	cout << str << endl;
+	for (int i = 0; i < s; i++)
+	{
+		cout << str[i] << " ";
+	}
 }
 void Task3()
 {
-	Queue<double> q = Queue<double>();
+	Queue<> q = Queue<>();
 	cout << "Скiльки елементiв ви хочете додати до черги?" << endl;
 	int s;
 	cin >> s;
@@ -174,7 +200,7 @@ void Task3()
 }
 void Task4()
 {
-	List<double> l;
+	List<double> l = List<double>();
 	cout << "Скiльки елементiв ви хочете додати до списку?" << endl;
 	int s;
 	double d;

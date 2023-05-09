@@ -12,9 +12,16 @@ public:
 template<typename T>
 class List
 {
-	El<T>* head = nullptr;
+	El<T>* head;
 public:
-
+	List()
+	{
+		head = nullptr;
+	}
+	List(T t)
+	{
+		push(t);
+	}
 	class Iterator
 	{
 		El<T>* ptr;

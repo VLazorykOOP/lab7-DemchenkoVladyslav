@@ -1,4 +1,2 @@
 ﻿  source.cpp
-C:\Users\User\Desktop\lab7-DemchenkoVladyslav\lab7-DemchenkoVladyslav\lab7-DemchenkoVladyslav\source.cpp(111,29): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\User\Desktop\lab7-DemchenkoVladyslav\lab7-DemchenkoVladyslav\lab7-DemchenkoVladyslav\source.cpp(143,28): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
   lab7-DemchenkoVladyslav.vcxproj -> C:\Users\User\Desktop\lab7-DemchenkoVladyslav\lab7-DemchenkoVladyslav\x64\Debug\lab7-DemchenkoVladyslav.exe
